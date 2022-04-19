@@ -46,7 +46,7 @@ Identify drivers of the exoplanet archive disposition to determine which attribu
 
 The Kepler Space Observatory is a NASA-built telescope dedicated to searching for exoplanets in star systems besides our own, with the ultimate goal of possibly finding other habitable planets. The Kepler Space Observatory is retired as of October 30, 2018, but all the data it collected can be accessed from the NASA Exoplanet Archive [here](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=cumulative), or from Kaggle [here](https://www.kaggle.com/datasets/nasa/kepler-exoplanet-search-results). Observations in the Kepler Object of Interest table were made using the transit method for identifying exoplanets in other star systems. The transit method involves measuring the light intensity of a host star over time and looking for periodic dips in light intensity which signify an object eclipsing the host star, which could potentially indicate the presence of an exoplanet.
 
-<i>More pending</i>
+Identifying exoplanets can be a time consuming process particularly for planets with long orbital periods, that is planets that like the Earth may take upwards of a year to orbit their host star. With that in mind when candidate exoplanets are identified being able to prioritize the candidates that will most likely be confirmed can help to further the goal of identifying exoplanets. So we would like to determine which attributes are most indicative of a confirmed exoplanet disposition and similarly which attributes are most indicative of a false positive disposition. Finally, once these attributes are determined they will be used to produce a reusable machine learning model that can help predict which exoplanet candidates are most likely to be confirmed.
 
 ### What Should The End Result Be?
 
@@ -57,7 +57,12 @@ The goal of this project (in regards to final deliverables) is to provide reprod
 
 ### Initial Questions
 
-<i>pending</i>
+We are trying to find drivers of the exoplanet archive disposition so we want to identify the features in the data that provide the most meaningful information in regards to whether an object of interest is likely to be a confirmed exoplanet or a false positive. However, with that in mind we should also be sure to not use features that leak information about the target as this would defeat the purpose. So we aim to answer the following questions:
+
+- What features are most indicative of a confirmed exoplanet disposition?
+- What features are most indicative of a false positive disposition?
+- Which features leak information about the target and should be removed in preparation?
+- Can the features that are predictive of the target be narrowed down so as to provide an easily reusable modeling solution?
 
 ### Who is The Audience?
 
