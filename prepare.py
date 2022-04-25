@@ -40,6 +40,9 @@ def prepare_kepler(df: pd.DataFrame) -> pd.DataFrame:
     '''
 
     df = drop_missing_values(df, 0.75, 1)
+
+    not_candidate = ~(df.koi_disposition == 'CANDIDATE')
+    df = df[not_candidate]
     
     columns_to_drop = [
         'rowid',
