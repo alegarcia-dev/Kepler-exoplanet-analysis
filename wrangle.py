@@ -17,6 +17,8 @@
 
 ################################################################################
 
+import pandas as pd
+
 from acquire_kepler import AcquireKeplerData
 from prepare import prepare_kepler
 

@@ -38,6 +38,8 @@
 import os
 import pandas as pd
 
+from acquire import Acquire
+
 ################################################################################
 
 class AcquireKeplerData(Acquire):
