@@ -20,6 +20,7 @@
     Class Methods:
 
         read_from_source(self)
+        create_cache_file(self, df, cache_data = True, verbose = False)
 
     Inherited Fields:
         
@@ -27,7 +28,7 @@
 
     Inherited Methods:
 
-        __init__(self, file_name, database_name, sql)
+        __init__(self, file_name)
         get_data(self, use_cache = True, cache_data = True)
 
 '''
@@ -43,7 +44,7 @@ class AcquireKeplerData(Acquire):
 
     ################################################################################
 
-    def read_from_source(self):
+    def read_from_source(self) -> pd.DataFrame:
         '''
             Acquire the Kepler exoplanet search results data with the Kaggle API.
             If the Kaggle API is not installed an exception is raised.
@@ -68,6 +69,31 @@ class AcquireKeplerData(Acquire):
         os.system('unzip cumulative.csv.zip')
         os.system('rm cumulative.csv.zip')
         df = pd.read_csv('cumulative.csv')
-        os.system('rm cumulative.csv')
         
         return df
+
+    ################################################################################
+
+    def create_cache_file(self, df: pd.DataFrame, cache_data: bool = True, verbose: bool = True) -> None:
+        '''
+            Cache the dataframe in a .csv file if cache_data is True.
+        
+            Parameters
+            ----------
+            df: DataFrame
+                A pandas dataframe with which to cache in a .csv file.
+
+            cache_data: bool, optional
+                If True the dataframe will be cached in a .csv file.
+
+            verbose: bool, optional
+                If True details about the steps being taken by this function 
+                will be printed to the console.
+        '''
+
+        if cache_data:
+            if verbose: print('Cacheing data.')
+            os.system(f'mv cumulative.csv {self.file_name}')
+        else:
+            if verbose: print('Data not cached.')
+            os.system('rm cumulative.csv')

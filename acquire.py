@@ -19,8 +19,9 @@
     Class Methods:
 
         __init__(self, file_name, database_name, sql)
-        get_data(self, use_cache = True, cache_data = True)
+        get_data(self, use_cache = True, cache_data = True, verbose = False)
         read_from_source(self)
+        create_cache_file(self, df, cache_data = True, verbose = False)
 
 '''
 
@@ -60,7 +61,7 @@ class Acquire:
 
     ################################################################################
 
-    def get_data(self, use_cache: bool = True, cache_data: bool = True) -> pd.DataFrame:
+    def get_data(self, use_cache: bool = True, cache_data: bool = True, verbose: bool = False) -> pd.DataFrame:
         '''
             Return a dataframe containing data from the database defined by 
             self.database_name.
@@ -81,6 +82,10 @@ class Acquire:
             cache_data: bool, optional
                 If True the dataset will be cached in a csv file.
 
+            verbose: bool, optional
+                If True details about the steps being taken by this function 
+                will be printed to the console.
+
             Returns
             -------
             DataFrame: A Pandas DataFrame containing data from the source provided.
@@ -88,15 +93,14 @@ class Acquire:
 
         # If the file is cached, read from the .csv file
         if os.path.exists(self.file_name) and use_cache:
+            if verbose: print('Reading from .csv file.')
             return pd.read_csv(self.file_name)
         
         # Otherwise read from the mysql database
         else:
+            if verbose: print('Reading from source.')
             df = self.read_from_source()
-
-            # Cache the data in a .csv file, if that is what we want
-            if cache_data:
-                df.to_csv(self.file_name, index = False)
+            self.create_cache_file(df, cache_data = cache_data, verbose = verbose)
 
             return df
 
@@ -114,3 +118,28 @@ class Acquire:
             to read data from the source. Otherwise, a .csv file 
             containing the required data must be manually downloaded.
         ''')
+
+    ################################################################################
+
+    def create_cache_file(self, df: pd.DataFrame, cache_data: bool = True, verbose: bool = False) -> None:
+        '''
+            Cache the dataframe in a .csv file if cache_data is True.
+        
+            Parameters
+            ----------
+            df: DataFrame
+                A pandas dataframe with which to cache in a .csv file.
+
+            cache_data: bool, optional
+                If True the dataframe will be cached in a .csv file.
+
+            verbose: bool, optional
+                If True details about the steps being taken by this function 
+                will be printed to the console.
+        '''
+
+        if cache_data:
+            if verbose: print('Cacheing data.')
+            df.to_csv(self.file_name, index = False)
+        else:
+            if verbose: print('Data not cached.')
