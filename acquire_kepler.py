@@ -46,7 +46,7 @@ class AcquireKeplerData(Acquire):
 
     ################################################################################
 
-    def __init__(self, file_name: str = '') -> None:
+    def __init__(self, file_name: str = 'kepler.csv') -> None:
         '''
             Parameters
             ----------
@@ -54,7 +54,7 @@ class AcquireKeplerData(Acquire):
                 A .csv file name for cacheing data for quicker access.
         '''
 
-        self.file_name = 'kepler.csv' if not file_name else file_name
+        self.file_name = file_name
 
     ################################################################################
 
