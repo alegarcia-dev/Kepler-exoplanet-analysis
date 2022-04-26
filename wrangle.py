@@ -11,7 +11,7 @@
 
     Functions:
 
-        wrangle_kepler()
+        wrangle_kepler_explore()
 
 '''
 
@@ -24,7 +24,7 @@ from prepare import prepare_kepler
 
 ################################################################################
 
-def wrangle_kepler() -> pd.DataFrame:
+def wrangle_kepler_explore() -> pd.DataFrame:
     '''
         Acquire and prepare the kepler exoplanet data. Return the resulting 
         dataframe.

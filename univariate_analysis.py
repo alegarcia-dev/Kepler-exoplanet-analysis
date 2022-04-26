@@ -27,131 +27,147 @@ import seaborn as sns
 
 ################################################################################
 
-def get_hist(df: pd.core.frame.DataFrame, columns: list[str]) -> None:
+def get_hist(
+    df: pd.DataFrame,
+    columns: list[str],
+    *,
+    bins: int = 20,
+    label_rotation: int = 30,
+    figure_width: int = 14,
+    figure_height: int = 4
+) -> None:
     '''
-    Gets histographs of acquired continuous variables.
-    
-    Parameters
-    ----------
-    df: DataFrame
-        A pandas dataframe from which we will visualize the univariate 
-        distributions of features.
+        Gets histographs of acquired continuous variables.
+        
+        Parameters
+        ----------
+        df: DataFrame
+            A pandas dataframe from which we will visualize the univariate 
+            distributions of features.
 
-    columns: list[str]
-        A list of the columns we would like to visualize.
+        columns: list[str]
+            A list of the columns we would like to visualize.
+
+        bins: int, keyword optional
+            The number of bins to use in each histogram. Default is 20.
+
+        label_rotation: int, keyword optional
+            The number of degrees to rotate the tick labels. Default is 30.
+
+        figure_width: int, keyword optional
+            The width of the figure. Default is 14.
+
+        figure_height: int, keyword optional
+            The height of each individual plot. Default is 4.
     '''
 
-    fig, ax = _create_sub_plots(len(columns))
-    num_columns = 3
+    fig, ax = plt.subplots(ncols = 1, nrows = len(columns), figsize = (figure_width, figure_height * len(columns)))
 
     for index, column in enumerate(columns):
         sns.histplot(
             data = df[column],
-            bins = 5,
-            ax = ax[index // num_columns][index % num_columns]
+            bins = bins,
+            ax = ax[index]
         )
 
         # Rotate the tick labels in case there are some lengthy tick labels.
-        ax[index // num_columns][index % num_columns].tick_params(labelrotation = 30)
+        ax[index].tick_params(labelrotation = label_rotation)
 
         # Title with column name.
-        plt.title(column)
+        ax[index].set_title(column)
 
         # turn off scientific notation
         plt.ticklabel_format(useOffset=False)
 
         plt.grid(False)
-        plt.tight_layout()
 
+    plt.tight_layout()
     plt.show()
 
 ################################################################################
 
-def get_box(df: pd.core.frame.DataFrame, columns: list[str]) -> None:
+def get_box(
+    df: pd.DataFrame,
+    columns: list[str],
+    *,
+    bins: int = 20,
+    label_rotation: int = 30,
+    figure_width: int = 14,
+    figure_height: int = 4
+) -> None:
     '''
-    Gets boxplots of acquired continuous variables.
-    
-    Parameters
-    ----------
-    df: DataFrame
-        A pandas dataframe from which we will visualize the univariate 
-        distributions of features.
+        Gets boxplots of acquired continuous variables.
+        
+        Parameters
+        ----------
+        df: DataFrame
+            A pandas dataframe from which we will visualize the univariate 
+            distributions of features.
 
-    columns: list[str]
-        A list of the columns we would like to visualize.
+        columns: list[str]
+            A list of the columns we would like to visualize.
+
+        bins: int, keyword optional
+            The number of bins to use in each histogram. Default is 20.
+
+        label_rotation: int, keyword optional
+            The number of degrees to rotate the tick labels. Default is 30.
+
+        figure_width: int, keyword optional
+            The width of the figure. Default is 14.
+
+        figure_height: int, keyword optional
+            The height of each individual plot. Default is 4.
     '''
 
-    fig, ax = _create_sub_plots(len(columns))
-    num_columns = 3
+    fig, ax = plt.subplots(ncols = 1, nrows = len(columns), figsize = (figure_width, figure_height * len(columns)))
 
     for index, column in enumerate(columns):
         sns.boxplot(
             data = df,
             x = column,
-            ax = ax[index // num_columns][index % num_columns]
+            ax = ax[index]
         )
 
         # Rotate the tick labels in case there are some lengthy tick labels.
-        ax[index // num_columns][index % num_columns].tick_params(labelrotation = 30)
+        ax[index].tick_params(labelrotation = label_rotation)
 
         # Title with column name.
-        plt.title(column)
+        ax[index].set_title(column)
 
         # turn off scientific notation
         plt.ticklabel_format(useOffset=False)
 
         plt.grid(False)
-        plt.tight_layout()
-
+        
+    plt.tight_layout()
     plt.show()
 
 ################################################################################
 
-def _create_sub_plots(num_features: int):
+def plot_single_variable(df: pd.DataFrame, feature: str, title: str = '', bins: int = 20):
     '''
-        Create figure with subplots for the number of columns provided 
-        where each row of subplots has 3 columns and there are enough 
-        rows to fit all columns into a plot.
+        Create a histogram and boxplot for a single variable.
     
         Parameters
         ----------
-        num_columns: int
-            The number of columns to fit in the figure.
-    '''
+        df: DataFrame
+            A dataframe with data that needs to be plotted.
 
-    # We want the height to be a multiple of 3 and it should provide
-    # enough space for each of our variables.
-    figure_width = 14
-    figure_height = ((num_features // 3) + 1) * 3
+        feature: str
+            The name of the variable to plot.
 
-    # Similar to the height we want the number of rows to account for
-    # each row having 3 plots.
-    num_rows = num_features // 3 + 1
-    num_columns = 3
-    
-    fig, ax = plt.subplots(nrows = num_rows, ncols = num_columns, figsize = (figure_width, figure_height))
-    return fig, ax
+        title: str, optional
+            An optional title to include with the plots.
 
-################################################################################
-
-def plot_single_variable(df: pd.DataFrame, feature: str, title: str = '', histplot_bins: int = 50):
-    '''
-        description
-    
-        Parameters
-        ----------
-        parameter: parameter_type
-            parameter_description
-    
-        Returns
-        -------
-        return_type: return_description
+        bins: int, optional
+            The number of bins to use for the histogram. Default is 20.
     '''
 
     fig, ax = plt.subplots(nrows = 1, ncols = 2, figsize = (14, 4))
     fig.suptitle(title)
 
-    sns.histplot(df[feature], bins = histplot_bins, ax = ax[0])
+    sns.histplot(df[feature], bins = bins, ax = ax[0])
     sns.boxplot(data = df, x = feature, ax = ax[1])
 
     plt.show()
