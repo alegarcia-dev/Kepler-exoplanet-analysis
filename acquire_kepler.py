@@ -46,6 +46,18 @@ class AcquireKeplerData(Acquire):
 
     ################################################################################
 
+    def __init__(self, file_name: str = '') -> None:
+        '''
+            Parameters
+            ----------
+            file_name: str
+                A .csv file name for cacheing data for quicker access.
+        '''
+
+        self.file_name = 'kepler.csv' if not file_name else file_name
+
+    ################################################################################
+
     def read_from_source(self) -> pd.DataFrame:
         '''
             Acquire the Kepler exoplanet search results data with the Kaggle API.
