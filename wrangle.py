@@ -13,6 +13,7 @@
 
         wrangle_kepler_explore()
         wrangle_kepler_modeling()
+        wrangle_kepler()
 
 '''
 
@@ -51,3 +52,7 @@ def wrangle_kepler_modeling() -> tuple[pd.DataFrame]:
     '''
 
     return split_data(prepare_kepler_modeling(AcquireKeplerData().get_data()), stratify = 'disposition')
+
+################################################################################
+
+wrangle_kepler = wrangle_kepler_modeling

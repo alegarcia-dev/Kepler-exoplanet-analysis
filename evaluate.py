@@ -25,9 +25,9 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 
 def evaluate(target: pd.Series, prediction: pd.Series, positive_label: str, prefix: str = ''):
     return {
-        prefix + 'accuracy' : accuracy_score(target, prediction),
-        prefix + 'recall' : recall_score(target, prediction, pos_label = positive_label, zero_division = 0),
-        prefix + 'precision' : precision_score(target, prediction, pos_label = positive_label, zero_division = 0)
+        prefix + 'accuracy' : round(accuracy_score(target, prediction), 2),
+        prefix + 'recall' : round(recall_score(target, prediction, pos_label = positive_label, zero_division = 0), 2),
+        prefix + 'precision' : round(precision_score(target, prediction, pos_label = positive_label, zero_division = 0), 2)
     }
 
 ################################################################################
