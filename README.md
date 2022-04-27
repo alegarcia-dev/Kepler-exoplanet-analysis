@@ -1,4 +1,4 @@
-# Exploring Kepler Exoplanet Data
+# Predicting Kepler Exoplanet Archive Disposition
 
 This repository contains all files, and ipython notebooks, used in the Kepler exoplanet project. A full outline of all the files with descriptions can be found below.
 
@@ -48,7 +48,9 @@ Identify drivers of the exoplanet archive disposition to determine which attribu
 
 The Kepler Space Observatory is a NASA-built telescope dedicated to searching for exoplanets in star systems besides our own, with the ultimate goal of possibly finding other habitable planets. The Kepler Space Observatory is retired as of October 30, 2018, but all the data it collected can be accessed from the NASA Exoplanet Archive [here](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=cumulative), or from Kaggle [here](https://www.kaggle.com/datasets/nasa/kepler-exoplanet-search-results). Observations in the Kepler Object of Interest table were made using the transit method for identifying exoplanets in other star systems. The transit method involves measuring the light intensity of a host star over time and looking for periodic dips in light intensity which signify an object eclipsing the host star, which could potentially indicate the presence of an exoplanet.
 
-Identifying exoplanets can be a time consuming process particularly for planets with long orbital periods, that is planets that like the Earth may take upwards of a year to orbit their host star. With that in mind when candidate exoplanets are identified being able to prioritize the candidates that will most likely be confirmed can help to further the goal of identifying exoplanets. So we would like to determine which attributes are most indicative of a confirmed exoplanet disposition and similarly which attributes are most indicative of a false positive disposition. Finally, once these attributes are determined they will be used to produce a reusable machine learning model that can help predict which exoplanet candidates are most likely to be confirmed.
+Identifying exoplanets can be a time consuming process particularly for planets with long orbital periods, such as planets that like the Earth may take upwards of a year to orbit their host star. With that in mind when candidate exoplanets are identified being able to prioritize the candidates that will most likely be confirmed can help to further the goal of identifying exoplanets. So we would like to determine which attributes are most indicative of a confirmed exoplanet disposition and similarly which attributes are most indicative of a false positive disposition. Finally, once these attributes are determined they will be used to produce a reusable machine learning model that can help predict which exoplanet candidates are most likely to be confirmed.
+
+As a data scientist with an interest in astronomy I aim to provide a means for determining which objects of interest will be most likely to result in newly discovered exoplanets. This way time is not lost observing objects that may end up not being exoplanets.
 
 ### What Should The End Result Be?
 
@@ -103,6 +105,7 @@ ___
 ## Outline of Project Plan
 
 The following outlines the process taken through the Data Science Pipeline to complete this project.
+<br>
 Plan &#8594; Acquire &#8594; Prepare &#8594; Explore &#8594; Model &#8594; Deliver
 
 ---
