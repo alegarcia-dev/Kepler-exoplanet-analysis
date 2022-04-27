@@ -12,6 +12,7 @@
     Functions:
 
         wrangle_kepler_explore()
+        wrangle_kepler_modeling()
 
 '''
 
@@ -20,18 +21,33 @@
 import pandas as pd
 
 from acquire_kepler import AcquireKeplerData
-from prepare import prepare_kepler
+from prepare import prepare_kepler_explore, prepare_kepler_modeling
+from preprocessing import split_data
 
 ################################################################################
 
 def wrangle_kepler_explore() -> pd.DataFrame:
     '''
         Acquire and prepare the kepler exoplanet data. Return the resulting 
-        dataframe.
+        dataframe. This wrangle function is used in exploration.
     
         Returns
         -------
         DataFrame: The prepared kepler exoplanet data.
     '''
 
-    return prepare_kepler(AcquireKeplerData('kepler.csv').get_data())
+    return prepare_kepler_explore(AcquireKeplerData().get_data())
+
+################################################################################
+
+def wrangle_kepler_modeling() -> tuple[pd.DataFrame]:
+    '''
+        Acquire and prepare the kepler exoplanet data. Return the resulting 
+        dataframe. This wrangle function is used in modeling.
+    
+        Returns
+        -------
+        DataFrame: The prepared kepler exoplanet data.
+    '''
+
+    return split_data(prepare_kepler_modeling(AcquireKeplerData().get_data()), stratify = 'disposition')
