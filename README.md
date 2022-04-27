@@ -8,6 +8,8 @@ This repository contains all files, and ipython notebooks, used in the Kepler ex
 <summary><i>Click to expand</i></summary>
 
 - README.md: Contains a full outline of the project, information regarding the format of the repository, and instructions for reproducing the results.
+- kepler_exoplanet_report.ipynb: The final report containing a high level overview of the project including key takeaways, final results, and a recommendations.
+- notebooks: A directory containing all working notebooks for each phase of the pipeline.
 
 </details>
 
@@ -30,7 +32,7 @@ ___
 
 ## Project Summary
 
-<i>pending</i>
+Data from the NASA Exoplanet Archive was used to determine the attributes that distinguish confirmed exoplanets from false positives, or objects identified as candidate exoplanets that are determined to not be exoplanets after further analysis. A classification model that is robust to newly obtained observations was produced and obtained 90% accuracy on unseen data.
 
 ___
 
@@ -99,6 +101,10 @@ Only the features that are mentioned most frequently are defined in this diction
 ___
 
 ## Outline of Project Plan
+
+The following outlines the process taken through the Data Science Pipeline to complete this project.
+Plan &#8594; Acquire &#8594; Prepare &#8594; Explore &#8594; Model &#8594; Deliver
+
 ---
 ### Data Acquisition
 
@@ -153,21 +159,41 @@ ___
 ### Modeling
 
 **Modeling Files:**
-
+- model.ipynb, covers all the steps taken in the modeling phase.
+- model.py, contains functions used for producing machine learning models in the model notebook and final report.
+- evaluate.py, contains functions used for evaluating the performance of machine learning models.
+- baseline.py, contains functions used for establishing a baseline model.
 
 **Steps Taken:**
-
+- The data is acquired, prepared, and split using the wrangle module produced in the preparation phase.
+- The data is scaled since some of the features have very wide ranges of values.
+- The models are to be evaluated using the accuracy score, with precision as a tie breaker if needed. The reason for using accuracy is that our target is fairly evenly split and we are equally interested in accuractely predicting false positives and confirmed exoplanets, because accurate predictions in both cases will help to guide priorities for further observations. Precision is used as a secondary evaluation metric, because in the case that we cannot achieve high accuracy we want to prioritize correctly identifying confirmed exoplanets, where a confirmed disposition is the positive label, since these observations will be given priority for further analysis to determine the true disposition.
+- A baseline model is established with which to compare our models to. This will provide a minimally viable product that uses the simplest approach to achieve accurate results. In this case the most frequent value in the target variable is the only predition made by the baseline model.
+- A feature selection algorithm is used to rank the importance of the features chosen in exploration so that when adding more features to our models we can add them in the order they are ranked.
+- Models using various machine learning algorithms are created using a subset of the chosen features. The algorithm with the best overall performance is chosen to move forward.
+- Various combinations of hyper-parameters are used with the best algorithm to produce more models. The model with the best performance is chosen to move forward.
+- Using the best algorithm with the best combination of hyper-parameters several more models are produced with added features.
+- The best model is chosen and evaluated on the unseen test dataset.
 
 ___
 
 ## Conclusion
 
-<i>pending</i>
+- Much of the raw data consists of observations that have a disposition of candidate exoplanet. These observations cannot be used since we are only interested in dispositions of false positive or confirmed exoplanet. Additionally, a lot of null values exist in the raw data and needed to be removed.
+- A few features in the data leak information about the target variable and should therefore not be used in modeling. Some research and analysis was conducted to show that these features would not be available to us given new observations either way so using these features in our model would ultimately result in a model that doesn't work with new observations.
+- Exploratory analysis revealed a few features were useful for distinguishing false positive observations from confirmed exoplanet observations. Namely, planetary radius, orbital period, normalized depth, transit depth, transit duration, and planetary approximate temperature. Statistical tests confirmed that the difference in each of these features between false positives and confirmed exoplanets was significant.
+- A large variety of machine learning models were produced using various algorithms and hyper-parameters. It was shown that using the features identified in exploration could produce a highly accurate model for predicting exoplanet disposition. A Gradient Boosting Classifier produced the best results and was able to predict exoplanet archive disposition on unseen data with nearly 90% accuracy.
 
 ___
 
 ## Instructions For Recreating This Project
 
-<i>pending</i>
+1. Clone this repository into your local machine using the following command:
+```bash
+git clone git@github.com:alegarcia-dev/kepler-exoplanet-analysis.git
+```
+2. You will need Pandas, Numpy, Matplotlib, Seaborn, SKLearn, and the Kaggle API installed on your machine.
+    - If you do not have the Kaggle API installed follow these [instructions](https://github.com/Kaggle/kaggle-api) to install it.
+3. Now you can start a Jupyter Notebook session and execute the code blocks in the kepler_exoplanet_report.ipynb notebook.
 
 [Back to top](#exploring-kepler-exoplanet-data)
