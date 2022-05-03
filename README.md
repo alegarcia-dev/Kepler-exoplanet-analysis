@@ -2,13 +2,13 @@
 
 This repository contains all files, and ipython notebooks, used in the Kepler exoplanet project. A full outline of all the files with descriptions can be found below.
 
-## Repository Format
+**Repository Format:**
 
 <details>
 <summary><i>Click to expand</i></summary>
 
 - README.md: Contains a full outline of the project, information regarding the format of the repository, and instructions for reproducing the results.
-- kepler_exoplanet_report.ipynb: The final report containing a high level overview of the project including key takeaways, final results, and a recommendations.
+- kepler_exoplanet_report.ipynb: The final report containing a high level overview of the project including key takeaways, final results, and recommendations.
 - notebooks: A directory containing all working notebooks for each phase of the pipeline.
 
 </details>
@@ -80,7 +80,7 @@ ___
 
 <details><summary><i>Click to expand</i></summary>
 
-Only the features that are mentioned most frequently are defined in this dictionary. For the full data dictionary and more details refer to this [link](https://exoplanetarchive.ipac.caltech.edu/docs/API_kepcandidate_columns.html).
+Only the features that are most pertinent to this project are defined in this dictionary. For the full data dictionary and more details refer to this [link](https://exoplanetarchive.ipac.caltech.edu/docs/API_kepcandidate_columns.html).
 
 | Variable              | Meaning      |
 | --------------------- | ------------ |
@@ -111,18 +111,28 @@ Plan &#8594; Acquire &#8594; Prepare &#8594; Explore &#8594; Model &#8594; Deliv
 ---
 ### Data Acquisition
 
+<details><summary><i>Click to expand</i></summary>
+
 **Acquisition Files:**
 - wrangle.ipynb, contains a section on data acquisition that covers all the steps taken in the data acquisition phase.
 - acquire_kepler.py, contains the code needed to download the data from the source and has code used for cacheing the data.
 - acquire.py, contains a parent class used by the acquire_kepler.py file.
 
 **Steps Taken:**
-- The data is acquired from Kaggle [here](https://www.kaggle.com/datasets/nasa/kepler-exoplanet-search-results), using the Kaggle API. This requires an API key. Alternatively, the .csv file can be downloaded manually from Kaggle.
-- The data can also be acquired from the NASA Exoplanet Archive [here](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=cumulative), using the NASA Exoplanet Archive API. This does not require an API key, but a key can be obtained. Alternatively, the .csv file can be downloaded from the NASA Exoplanet Archive site. The site states that the organization is in the process of updating the API to a different format so the code used in this project may not work in the future. It's better to rely on the Kaggle API.
-- The code that reads the data from the source will first attempt to utilize the Kaggle API before attempting to use the NASA API.
+- The data is acquired from Kaggle [here](https://www.kaggle.com/datasets/nasa/kepler-exoplanet-search-results), using the Kaggle API. This requires an API key.
 - All acquisition code is abstracted in the acquire_kepler.py and acquire.py files for reusability. By default the downloaded data will be cached in a kepler.csv file unless otherwise specified or if a different file name is provided.
 
+**Additional Acquisition Options:**
+- Alternatively, the .csv file can be downloaded manually from Kaggle. The file should be saved as "kepler.csv".
+- The data can be manually downloaded from the NASA Exoplanet Archive site [here](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=cumulative) as well. The file should be saved as "kepler.csv".
+- The data can also be acquired from the NASA Exoplanet Archive, using the NASA Exoplanet Archive API. This does not require an API key, but a key can be obtained. Alternatively, the .csv file can be downloaded from the NASA Exoplanet Archive site. The site states that the organization is in the process of updating the API to a different format so the code used in this project may not work in the future. It's better to rely on the Kaggle API.
+- In a future edit the code that reads the data from the source will first attempt to utilize the Kaggle API before attempting to use the NASA API.
+
+</details>
+
 ### Data Preparation
+
+<details><summary><i>Click to expand</i></summary>
 
 **Preparation Files:**
 - wrangle.ipynb, contains a section on data preparation that covers all the steps taken in the data preparation phase.
@@ -137,7 +147,11 @@ Plan &#8594; Acquire &#8594; Prepare &#8594; Explore &#8594; Model &#8594; Deliv
 - A few of the columns are renamed for readability. This renaming mostly only applies to the modeling phase and final report. Going into exploration only the target is renamed so as not to lose time renaming columns that won't be used beyond exploration. There were a lot of columns.
 - All preparation code is abstracted in the prepare.py and wrangle.py files for reusability.
 
+</details>
+
 ### Exploratory Analysis
+
+<details><summary><i>Click to expand</i></summary>
 
 **Exploratory Analysis Files:**
 - explore.ipynb, covers all the steps taken in the exploratory analysis phase.
@@ -159,7 +173,11 @@ Plan &#8594; Acquire &#8594; Prepare &#8594; Explore &#8594; Model &#8594; Deliv
     - orbital_period
     - transit_duration
 
+</details>
+
 ### Modeling
+
+<details><summary><i>Click to expand</i></summary>
 
 **Modeling Files:**
 - model.ipynb, covers all the steps taken in the modeling phase.
@@ -171,25 +189,33 @@ Plan &#8594; Acquire &#8594; Prepare &#8594; Explore &#8594; Model &#8594; Deliv
 - The data is acquired, prepared, and split using the wrangle module produced in the preparation phase.
 - The data is scaled since some of the features have very wide ranges of values.
 - The models are to be evaluated using the accuracy score, with precision as a tie breaker if needed. The reason for using accuracy is that our target is fairly evenly split and we are equally interested in accuractely predicting false positives and confirmed exoplanets, because accurate predictions in both cases will help to guide priorities for further observations. Precision is used as a secondary evaluation metric, because in the case that we cannot achieve high accuracy we want to prioritize correctly identifying confirmed exoplanets, where a confirmed disposition is the positive label, since these observations will be given priority for further analysis to determine the true disposition.
-- A baseline model is established with which to compare our models to. This will provide a minimally viable product that uses the simplest approach to achieve accurate results. In this case the most frequent value in the target variable is the only predition made by the baseline model.
+- A baseline model is established with which to compare our models to. This will provide a minimally viable product that uses the simplest approach to achieve accurate results. In this case the most frequent value in the target variable is the only prediction made by the baseline model.
 - A feature selection algorithm is used to rank the importance of the features chosen in exploration so that when adding more features to our models we can add them in the order they are ranked.
 - Models using various machine learning algorithms are created using a subset of the chosen features. The algorithm with the best overall performance is chosen to move forward.
 - Various combinations of hyper-parameters are used with the best algorithm to produce more models. The model with the best performance is chosen to move forward.
 - Using the best algorithm with the best combination of hyper-parameters several more models are produced with added features.
 - The best model is chosen and evaluated on the unseen test dataset.
 
+</details>
+
 ___
 
 ## Conclusion
+
+<details><summary><i>Click to expand</i></summary>
 
 - Much of the raw data consists of observations that have a disposition of candidate exoplanet. These observations cannot be used since we are only interested in dispositions of false positive or confirmed exoplanet. Additionally, a lot of null values exist in the raw data and needed to be removed.
 - A few features in the data leak information about the target variable and should therefore not be used in modeling. Some research and analysis was conducted to show that these features would not be available to us given new observations either way so using these features in our model would ultimately result in a model that doesn't work with new observations.
 - Exploratory analysis revealed a few features were useful for distinguishing false positive observations from confirmed exoplanet observations. Namely, planetary radius, orbital period, normalized depth, transit depth, transit duration, and planetary approximate temperature. Statistical tests confirmed that the difference in each of these features between false positives and confirmed exoplanets was significant.
 - A large variety of machine learning models were produced using various algorithms and hyper-parameters. It was shown that using the features identified in exploration could produce a highly accurate model for predicting exoplanet disposition. A Gradient Boosting Classifier produced the best results and was able to predict exoplanet archive disposition on unseen data with nearly 90% accuracy.
 
+</details>
+
 ___
 
 ## Instructions For Recreating This Project
+
+<details><summary><i>Click to expand</i></summary>
 
 1. Clone this repository into your local machine using the following command:
 ```bash
@@ -198,5 +224,7 @@ git clone git@github.com:alegarcia-dev/kepler-exoplanet-analysis.git
 2. You will need Pandas, Numpy, Matplotlib, Seaborn, SKLearn, and the Kaggle API installed on your machine.
     - If you do not have the Kaggle API installed follow these [instructions](https://github.com/Kaggle/kaggle-api) to install it.
 3. Now you can start a Jupyter Notebook session and execute the code blocks in the kepler_exoplanet_report.ipynb notebook.
+
+</details>
 
 [Back to top](#exploring-kepler-exoplanet-data)
