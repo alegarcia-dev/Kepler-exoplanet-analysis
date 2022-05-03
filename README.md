@@ -9,7 +9,9 @@ This repository contains all files, and ipython notebooks, used in the Kepler ex
 
 - README.md: Contains a full outline of the project, information regarding the format of the repository, and instructions for reproducing the results.
 - kepler_exoplanet_report.ipynb: The final report containing a high level overview of the project including key takeaways, final results, and recommendations.
+- kepler.csv: A csv file containing the data used for this project for convenience.
 - notebooks: A directory containing all working notebooks for each phase of the pipeline.
+- util: A directory containing all .py files used in the final report notebook and the working notebooks.
 
 </details>
 
@@ -229,4 +231,4 @@ git clone git@github.com:alegarcia-dev/kepler-exoplanet-analysis.git
 
 </details>
 
-[Back to top](#exploring-kepler-exoplanet-data)
+[Back to top](#predicting-kepler-exoplanet-archive-disposition)
