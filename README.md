@@ -221,9 +221,11 @@ ___
 ```bash
 git clone git@github.com:alegarcia-dev/kepler-exoplanet-analysis.git
 ```
-2. You will need Pandas, Numpy, Matplotlib, Seaborn, SKLearn, and the Kaggle API installed on your machine.
-    - If you do not have the Kaggle API installed follow these [instructions](https://github.com/Kaggle/kaggle-api) to install it.
-3. Now you can start a Jupyter Notebook session and execute the code blocks in the kepler_exoplanet_report.ipynb notebook.
+2. You will need Pandas, Numpy, Matplotlib, Seaborn, and SKLearn installed on your machine.
+3. The .csv file (kepler.csv) used for this project is included with the repository, but there are alternatives for acquiring the data.
+    - Code is included to acquire the data using the Kaggle API. If you do not have the Kaggle API installed follow these [instructions](https://github.com/Kaggle/kaggle-api) to install it.
+    - The data can also be manually downloaded either from Kaggle [here](https://www.kaggle.com/datasets/nasa/kepler-exoplanet-search-results) or from the NASA Exoplanet Archive [here](https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=cumulative). If the data is downloaded manually name the file as "kepler.csv" or follow instructions in the report notebook to use a different file name.
+4. Now you can start a Jupyter Notebook session and execute the code blocks in the kepler_exoplanet_report.ipynb notebook.
 
 </details>
 
